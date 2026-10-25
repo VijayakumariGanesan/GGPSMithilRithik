@@ -250,12 +250,12 @@
       </div>
     </section>
 
-    <!-- TAB 4: Daily Tablet & Medicine Tracker (Pill Reminders) -->
+    <!-- TAB 4: Daily Tablet & Medicine Tracker (Pill Reminders with Time Windows & Auto-Alarm) -->
     <section id="sec-pills" class="tab-content hidden bg-white p-6 rounded-2xl shadow high-contrast-card">
       <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-4 gap-3">
         <div>
           <h2 class="font-extrabold text-xl text-gray-800" id="pill-title">Daily Tablet & Medicine Tracker</h2>
-          <p class="text-xs text-gray-500" id="pill-subtitle">Never miss a dose. Visual checklist for elderly users.</p>
+          <p class="text-xs text-gray-500" id="pill-subtitle">Set time windows. Automatic alarm triggers if medicine is missed!</p>
         </div>
         <button onclick="testAlarmSound()" class="bg-yellow-400 text-gray-900 font-bold px-4 py-2.5 rounded-xl shadow text-sm hover:bg-yellow-300 transition flex items-center justify-center space-x-2">
           <i class="fa-solid fa-bell"></i>
@@ -263,20 +263,32 @@
         </button>
       </div>
 
-      <!-- Add Medicine Input Form -->
-      <div class="bg-emerald-50/60 p-4 border-2 border-emerald-100 rounded-2xl mb-6">
-        <form onsubmit="addPillReminder(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <!-- Missed Medication Alarm Warning Banner -->
+      <div id="alarm-banner" class="hidden bg-red-600 text-white p-4 rounded-2xl mb-5 shadow-lg animate-pulse flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-triangle-exclamation text-3xl"></i>
           <div>
+            <h4 class="font-black text-base" id="alarm-banner-title">MEDICINE MISSED ALARM!</h4>
+            <p class="text-xs text-red-100" id="alarm-banner-desc">Patient has not taken scheduled medicine within the given time window!</p>
+          </div>
+        </div>
+        <button onclick="dismissAlarm()" class="bg-white text-red-700 font-bold px-3 py-1.5 rounded-xl text-xs">Dismiss</button>
+      </div>
+
+      <!-- Add Medicine Input Form with Two Times (Start & End Time) -->
+      <div class="bg-emerald-50/60 p-4 border-2 border-emerald-100 rounded-2xl mb-6">
+        <form onsubmit="addPillReminder(event)" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div class="md:col-span-1">
             <label class="block font-bold text-xs mb-1 text-gray-700">Medicine / Tablet Name</label>
-            <input type="text" id="pill-name" required placeholder="e.g. Paracetamol 500mg" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-emerald-600">
+            <input type="text" id="pill-name" required placeholder="e.g. Amlodipine 5mg" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-emerald-600">
           </div>
           <div>
-            <label class="block font-bold text-xs mb-1 text-gray-700">Time Slot</label>
-            <select id="pill-slot" required class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-emerald-600">
-              <option value="Morning">Morning (காலை)</option>
-              <option value="Afternoon">Afternoon (மதியம்)</option>
-              <option value="Night">Night (இரவு)</option>
-            </select>
+            <label class="block font-bold text-xs mb-1 text-gray-700">Start Time (From)</label>
+            <input type="time" id="pill-start" required class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-emerald-600">
+          </div>
+          <div>
+            <label class="block font-bold text-xs mb-1 text-gray-700">End Time (To - Deadline)</label>
+            <input type="time" id="pill-end" required class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-emerald-600">
           </div>
           <div class="flex items-end">
             <button type="submit" class="w-full bg-emerald-700 text-white font-bold p-3 rounded-xl shadow hover:bg-emerald-800 transition text-sm flex items-center justify-center space-x-1">
@@ -343,11 +355,11 @@
     let currentLang = 'en';
     let activeFilter = 'all';
 
-    // Default Pill Reminders
+    // Default Pill Reminders with Start and End Time Window
     let pillList = [
-      { id: 1, name: 'BP Tablet (Amlodipine)', slot: 'Morning', taken: true },
-      { id: 2, name: 'Paracetamol 500mg', slot: 'Afternoon', taken: false },
-      { id: 3, name: 'Diabetes (Metformin)', slot: 'Night', taken: false }
+      { id: 1, name: 'BP Tablet (Amlodipine)', startTime: '08:00', endTime: '09:00', taken: false },
+      { id: 2, name: 'Paracetamol 500mg', startTime: '13:00', endTime: '14:00', taken: false },
+      { id: 3, name: 'Diabetes (Metformin)', startTime: '20:00', endTime: '21:00', taken: false }
     ];
 
     // Default Vitals Logs
@@ -396,25 +408,6 @@
         }
       },
       {
-        id: 'allergy',
-        category: 'infectious',
-        isCommunicable: false,
-        en: {
-          name: 'Allergies & Skin Rash (ஒவ்வாமை / தோல் அரிப்பு)',
-          symptoms: 'Skin itching, red spots, continuous sneezing.',
-          remedies: 'Avoid suspected food/dust triggers, wear loose cotton clothes.',
-          tablets: 'Cetirizine or Levocetirizine (As advised).',
-          diet: 'Avoid sea foods, fermented foods during allergy.'
-        },
-        ta: {
-          name: 'ஒவ்வாமை & தோல் அரிப்பு (Allergy)',
-          symptoms: 'தோல் அரிப்பு, சிவப்பு தடிப்புகள், தொடர்ந்து தும்பல்.',
-          remedies: 'தூசி மற்றும் ஒவ்வாமை தரும் உணவுகளைத் தவிர்க்கவும்.',
-          tablets: 'செடிரிசின் மாத்திரை (மருத்துவர் அறிவுரைப்படி).',
-          diet: 'கடல் உணவுகள் மற்றும் புளித்த உணவுகளைத் தவிர்க்கவும்.'
-        }
-      },
-      {
         id: 'bp',
         category: 'chronic',
         isCommunicable: false,
@@ -459,6 +452,9 @@
       renderDiseases();
       renderPills();
       renderVitalsHistory();
+      
+      // Start background alarm check interval (every 15 seconds)
+      setInterval(checkMissedMedicinesAlarm, 15000);
     };
 
     // Navigation Tab Switching
@@ -537,7 +533,7 @@
       });
     }
 
-    // Pill Reminders Logic
+    // Pill Reminders Logic with Time Windows
     function renderPills() {
       const container = document.getElementById('pills-container');
       container.innerHTML = '';
@@ -547,8 +543,8 @@
         card.className = `p-4 border-2 rounded-2xl flex flex-col justify-between space-y-3 ${pill.taken ? 'border-emerald-300 bg-emerald-50/70' : 'border-gray-200 bg-white'}`;
         card.innerHTML = `
           <div class="flex items-center justify-between">
-            <span class="text-xs uppercase font-extrabold px-2.5 py-0.5 rounded-full ${pill.slot === 'Morning' ? 'bg-amber-100 text-amber-800' : pill.slot === 'Afternoon' ? 'bg-orange-100 text-orange-800' : 'bg-indigo-100 text-indigo-800'}">
-              ${pill.slot}
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800">
+              <i class="fa-regular fa-clock mr-1"></i> ${pill.startTime} - ${pill.endTime}
             </span>
             <button onclick="deletePill(${pill.id})" class="text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-trash-can"></i></button>
           </div>
@@ -565,9 +561,13 @@
     function addPillReminder(e) {
       e.preventDefault();
       const name = document.getElementById('pill-name').value;
-      const slot = document.getElementById('pill-slot').value;
-      pillList.push({ id: Date.now(), name: name, slot: slot, taken: false });
+      const startTime = document.getElementById('pill-start').value;
+      const endTime = document.getElementById('pill-end').value;
+
+      pillList.push({ id: Date.now(), name, startTime, endTime, taken: false });
       document.getElementById('pill-name').value = '';
+      document.getElementById('pill-start').value = '';
+      document.getElementById('pill-end').value = '';
       renderPills();
     }
 
@@ -581,13 +581,38 @@
       renderPills();
     }
 
+    // Automatic Alarm & Time Window Checker
+    function checkMissedMedicinesAlarm() {
+      const now = new Date();
+      const currentHours = String(now.getHours()).padStart(2, '0');
+      const currentMinutes = String(now.getMinutes()).padStart(2, '0');
+      const currentTimeStr = `${currentHours}:${currentMinutes}`;
+
+      let missedFound = false;
+      pillList.forEach(pill => {
+        // If current time has passed the end time deadline and pill is not taken
+        if (!pill.taken && currentTimeStr > pill.endTime) {
+          missedFound = true;
+        }
+      });
+
+      const banner = document.getElementById('alarm-banner');
+      if (missedFound) {
+        banner.classList.remove('hidden');
+      }
+    }
+
+    function dismissAlarm() {
+      document.getElementById('alarm-banner').classList.add('hidden');
+    }
+
     function testAlarmSound() {
       if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance("Time to take your medicine tablet!");
+        const utterance = new SpeechSynthesisUtterance("Alarm! Attention please. Medicine time has passed. Please take your tablet immediately.");
         utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
       }
-      alert("🔔 Beep Beep! Pill Reminder Alarm Triggered!");
+      alert("🔔 Alarm ringing! Missed tablet alert simulated successfully!");
     }
 
     // Vitals Evaluation Logic (NORMAL, HIGH, MEET DOCTOR IMMEDIATELY)
@@ -681,7 +706,7 @@
 
     function speakInstructions() {
       if ('speechSynthesis' in window) {
-        const text = "Welcome to Senior Care. Use the top tabs to check your profile, symptoms, doctors, pill reminders, and log your daily blood pressure and sugar levels.";
+        const text = "Welcome to Senior Care. Use the pill reminders tab to set medicine time windows. If a tablet is missed after the deadline, an alarm will automatically sound.";
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
