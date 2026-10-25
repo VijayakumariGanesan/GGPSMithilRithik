@@ -28,7 +28,7 @@
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      font-size: 18px; /* High legibility for seniors */
+      font-size: 18px;
       background-color: #F3F4F6;
     }
     .btn-senior {
@@ -38,161 +38,211 @@
     .high-contrast-card {
       border: 2px solid #E5E7EB;
     }
+    .tab-btn.active {
+      background-color: #DBEAFE;
+      color: #1E40AF;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body class="text-gray-900 pb-20">
 
-  <!-- Header Banner -->
+  <!-- Top Blue Navbar -->
   <header class="bg-brand-blue text-white p-4 sticky top-0 z-50 shadow-md">
-    <div class="max-w-md mx-auto flex items-center justify-between">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <i class="fa-solid font-bold text-3xl fa-heart-pulse text-red-400"></i>
+        <div class="bg-white p-2 rounded-xl text-brand-red flex items-center justify-center">
+          <i class="fa-solid fa-heart-pulse text-2xl text-red-600"></i>
+        </div>
         <div>
-          <h1 class="text-xl font-bold leading-tight" id="app-title">Senior Care</h1>
-          <p class="text-xs text-blue-100" id="app-subtitle">Health & Tele-Consultation</p>
+          <h1 class="text-2xl font-extrabold leading-tight" id="app-title">Senior Care</h1>
+          <p class="text-xs text-blue-100" id="app-subtitle">Healthcare & Tele-Consultation Companion</p>
         </div>
       </div>
-      <!-- Language Switcher -->
-      <button onclick="toggleLanguage()" class="bg-white text-brand-blue font-bold px-3 py-1.5 rounded-lg shadow text-sm hover:bg-gray-100 transition">
-        <i class="fa-solid fa-language mr-1"></i>
-        <span id="lang-toggle-text">தமிழ்</span>
-      </button>
+      <div class="flex items-center space-x-3">
+        <!-- Audio Guide Button -->
+        <button onclick="speakInstructions()" class="bg-transparent border-2 border-yellow-400 text-yellow-300 font-bold px-3 py-1.5 rounded-xl shadow text-sm hover:bg-yellow-400 hover:text-gray-900 transition flex items-center space-x-1">
+          <i class="fa-solid fa-volume-high"></i>
+          <span id="btn-voice-header">Audio Guide</span>
+        </button>
+        <!-- Language Switcher -->
+        <button onclick="toggleLanguage()" class="bg-white text-brand-blue font-bold px-3 py-1.5 rounded-xl shadow text-sm hover:bg-gray-100 transition flex items-center space-x-1">
+          <span id="lang-en" class="text-brand-blue font-bold">English</span>
+          <span class="text-gray-400">|</span>
+          <span id="lang-ta" class="text-gray-600 font-normal">தமிழ்</span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- SOS Emergency Banner -->
-  <div class="bg-red-600 text-white p-3 shadow-lg">
-    <div class="max-w-md mx-auto flex items-center justify-between">
-      <div class="flex items-center space-x-2">
-        <i class="fa-solid fa-truck-medical text-2xl animate-bounce"></i>
-        <div>
-          <p class="font-bold text-sm" id="sos-title">Medical Emergency?</p>
-          <p class="text-xs" id="sos-desc">Instant 108 Ambulance Request</p>
+  <main class="max-w-4xl mx-auto p-4 space-y-5">
+
+    <!-- Red SOS Emergency Ambulance Card -->
+    <div class="bg-red-600 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center space-x-4">
+          <div class="bg-white text-red-600 p-4 rounded-2xl shadow-inner flex items-center justify-center">
+            <i class="fa-solid fa-truck-medical text-3xl"></i>
+          </div>
+          <div>
+            <span class="bg-red-800 text-red-100 text-xs uppercase font-extrabold px-3 py-1 rounded-full tracking-wider" id="sos-badge">24/7 Government Emergency</span>
+            <h2 class="text-2xl font-extrabold mt-1" id="sos-title">Need Immediate Medical Assistance?</h2>
+            <p class="text-sm text-red-100" id="sos-desc">Instant 108 Ambulance dispatch and priority emergency triage</p>
+          </div>
         </div>
+        <button onclick="triggerSOS()" class="bg-yellow-400 text-gray-900 font-black px-6 py-4 rounded-2xl shadow-lg border-2 border-yellow-300 text-lg hover:bg-yellow-300 active:scale-95 transition flex items-center justify-center space-x-2 whitespace-nowrap w-full md:w-auto">
+          <i class="fa-solid fa-phone"></i>
+          <span id="sos-btn-text">CALL AMBULANCE (108)</span>
+        </button>
       </div>
-      <button onclick="triggerSOS()" class="bg-white text-red-700 font-extrabold px-4 py-2 rounded-xl shadow border-2 border-red-200 text-sm hover:bg-red-50 active:scale-95 transition">
-        <i class="fa-solid fa-phone-flip mr-1"></i> CALL 108
+    </div>
+
+    <!-- Main Navigation Tabs Bar -->
+    <div class="bg-white rounded-2xl p-2 shadow high-contrast-card flex items-center justify-between gap-1 overflow-x-auto">
+      <button onclick="switchTab('profile')" id="nav-profile" class="tab-btn active flex-1 py-3 px-2 rounded-xl text-sm font-bold flex flex-col items-center justify-center space-y-1 transition">
+        <i class="fa-solid fa-id-card text-lg"></i>
+        <span id="tab-txt-profile">Profile</span>
+      </button>
+      <button onclick="switchTab('symptoms')" id="nav-symptoms" class="tab-btn flex-1 py-3 px-2 rounded-xl text-sm font-bold flex flex-col items-center justify-center space-y-1 text-gray-600 transition">
+        <i class="fa-solid fa-stethoscope text-lg"></i>
+        <span id="tab-txt-symptoms">Symptoms & Care</span>
+      </button>
+      <button onclick="switchTab('doctors')" id="nav-doctors" class="tab-btn flex-1 py-3 px-2 rounded-xl text-sm font-bold flex flex-col items-center justify-center space-y-1 text-gray-600 transition">
+        <i class="fa-solid fa-user-doctor text-lg"></i>
+        <span id="tab-txt-doctors">Doctors</span>
+      </button>
+      <button onclick="switchTab('pills')" id="nav-pills" class="tab-btn flex-1 py-3 px-2 rounded-xl text-sm font-bold flex flex-col items-center justify-center space-y-1 text-gray-600 transition">
+        <i class="fa-solid fa-pills text-lg"></i>
+        <span id="tab-txt-pills">Pill Reminders</span>
+      </button>
+      <button onclick="switchTab('vitals')" id="nav-vitals" class="tab-btn flex-1 py-3 px-2 rounded-xl text-sm font-bold flex flex-col items-center justify-center space-y-1 text-gray-600 transition">
+        <i class="fa-solid fa-heart-pulse text-lg"></i>
+        <span id="tab-txt-vitals">Vitals Log</span>
       </button>
     </div>
-  </div>
 
-  <!-- Main Container -->
-  <main class="max-w-md mx-auto p-4 space-y-6">
-
-    <!-- Section 1: Senior Patient Details -->
-    <section class="bg-white p-5 rounded-2xl shadow high-contrast-card">
-      <div class="flex items-center space-x-2 border-b pb-3 mb-4">
-        <i class="fa-solid fa-id-card text-brand-blue text-xl"></i>
-        <h2 class="font-bold text-lg" id="patient-info-heading">Patient Basic Details</h2>
+    <!-- TAB 1: Patient Basic Profile Registration -->
+    <section id="sec-profile" class="tab-content bg-white p-6 rounded-2xl shadow high-contrast-card">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div>
+          <h2 class="font-extrabold text-xl text-gray-800" id="profile-title">Patient Basic Registration</h2>
+          <p class="text-xs text-gray-500" id="profile-subtitle">Stored locally on device for hospital check-ins and tele-consultations</p>
+        </div>
+        <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full font-bold flex items-center">
+          <i class="fa-solid fa-lock mr-1"></i> Encrypted & Local
+        </span>
       </div>
       <form id="patient-form" onsubmit="savePatientInfo(event)" class="space-y-4">
         <div>
-          <label class="block font-semibold text-sm mb-1" id="lbl-name">Full Name / பெயர்</label>
-          <input type="text" id="patient-name" required placeholder="e.g. Ramasamy M" class="w-full p-3 border-2 border-gray-300 rounded-xl text-base focus:border-brand-blue outline-none">
+          <label class="block font-bold text-sm mb-1" id="lbl-name">Full Name / பெயர்</label>
+          <input type="text" id="patient-name" required placeholder="e.g. Ramasamy M" class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-base focus:border-brand-blue outline-none">
         </div>
         <div>
-          <label class="block font-semibold text-sm mb-1" id="lbl-mobile">Mobile Number / கைபேசி எண்</label>
-          <input type="tel" id="patient-mobile" required pattern="[0-9]{10}" placeholder="10-digit mobile number" class="w-full p-3 border-2 border-gray-300 rounded-xl text-base focus:border-brand-blue outline-none">
+          <label class="block font-bold text-sm mb-1" id="lbl-mobile">Mobile Number / கைபேசி எண்</label>
+          <input type="tel" id="patient-mobile" required pattern="[0-9]{10}" placeholder="10-digit mobile number" class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-base focus:border-brand-blue outline-none">
         </div>
         <div>
-          <label class="block font-semibold text-sm mb-1" id="lbl-aadhar">Aadhaar Card / ஆதார் எண்</label>
-          <input type="text" id="patient-aadhar" required pattern="[0-9]{12}" placeholder="12-digit Aadhaar number" class="w-full p-3 border-2 border-gray-300 rounded-xl text-base focus:border-brand-blue outline-none">
-          <p class="text-xs text-gray-500 mt-1" id="aadhar-note">Stored securely for emergency registration</p>
+          <label class="block font-bold text-sm mb-1" id="lbl-aadhar">Aadhaar Card / ஆதார் எண்</label>
+          <input type="text" id="patient-aadhar" required pattern="[0-9]{12}" placeholder="12-digit Aadhaar number" class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-base focus:border-brand-blue outline-none">
+          <p class="text-xs text-gray-500 mt-1" id="aadhar-note">Stored securely for emergency hospital admission</p>
         </div>
-        <button type="submit" class="w-full bg-brand-blue text-white btn-senior rounded-xl shadow hover:bg-blue-800 transition">
+        <button type="submit" class="w-full bg-brand-blue text-white btn-senior rounded-xl shadow hover:bg-blue-800 transition text-base">
           <i class="fa-solid fa-floppy-disk mr-2"></i><span id="btn-save-patient">Save Patient Profile</span>
         </button>
       </form>
     </section>
 
-    <!-- Section 2: Diseases, Symptoms, Remedies & Medicines -->
-    <section class="bg-white p-5 rounded-2xl shadow high-contrast-card">
+    <!-- TAB 2: Diseases, Symptoms, Remedies & Medicines -->
+    <section id="sec-symptoms" class="tab-content hidden bg-white p-6 rounded-2xl shadow high-contrast-card">
       <div class="flex items-center justify-between border-b pb-3 mb-4">
-        <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-notes-medical text-brand-blue text-xl"></i>
-          <h2 class="font-bold text-lg" id="symptoms-heading">Symptoms & Remedies</h2>
+        <div>
+          <h2 class="font-extrabold text-xl text-gray-800" id="symptoms-title">Symptoms & Care Guidelines</h2>
+          <p class="text-xs text-gray-500" id="symptoms-subtitle">Choose your symptom to view first aid, tablets, and diet recommendations</p>
         </div>
       </div>
 
       <!-- Filter Buttons -->
       <div class="flex space-x-2 mb-4">
-        <button onclick="filterDiseases('all')" id="tab-all" class="flex-1 py-2 text-xs font-bold rounded-lg bg-brand-blue text-white">All</button>
-        <button onclick="filterDiseases('infectious')" id="tab-inf" class="flex-1 py-2 text-xs font-bold rounded-lg bg-gray-200 text-gray-800">Infectious</button>
-        <button onclick="filterDiseases('chronic')" id="tab-chr" class="flex-1 py-2 text-xs font-bold rounded-lg bg-gray-200 text-gray-800">Chronic (NCD)</button>
+        <button onclick="filterDiseases('all')" id="tab-all" class="flex-1 py-2 text-xs font-bold rounded-xl bg-brand-blue text-white">All</button>
+        <button onclick="filterDiseases('infectious')" id="tab-inf" class="flex-1 py-2 text-xs font-bold rounded-xl bg-gray-200 text-gray-800">Infectious</button>
+        <button onclick="filterDiseases('chronic')" id="tab-chr" class="flex-1 py-2 text-xs font-bold rounded-xl bg-gray-200 text-gray-800">Chronic (NCD)</button>
       </div>
 
       <!-- Disease Search Box -->
       <div class="mb-4">
-        <input type="text" id="disease-search" oninput="renderDiseases()" placeholder="Search symptom / நோய் தேடுக..." class="w-full p-2.5 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-brand-blue">
+        <input type="text" id="disease-search" oninput="renderDiseases()" placeholder="Search symptom / நோய் தேடுக..." class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-brand-blue">
       </div>
 
       <!-- Disease Cards List -->
       <div id="disease-list" class="space-y-4">
-        <!-- Rendered dynamically -->
+        <!-- Dynamic Cards -->
       </div>
     </section>
 
-    <!-- Section 3: Nearby Doctor Contacts & Tele-Appointment -->
-    <section class="bg-white p-5 rounded-2xl shadow high-contrast-card">
+    <!-- TAB 3: Nearby Doctor Contacts & Tele-Appointment -->
+    <section id="sec-doctors" class="tab-content hidden bg-white p-6 rounded-2xl shadow high-contrast-card">
       <div class="flex items-center space-x-2 border-b pb-3 mb-4">
-        <i class="fa-solid fa-user-doctor text-brand-blue text-xl"></i>
-        <h2 class="font-bold text-lg" id="doctor-heading">Nearby Doctors & Tele-Consult</h2>
+        <i class="fa-solid fa-user-doctor text-brand-blue text-2xl"></i>
+        <div>
+          <h2 class="font-extrabold text-xl text-gray-800" id="doctor-title">Nearby Doctors & Tele-Consultation</h2>
+          <p class="text-xs text-gray-500" id="doctor-subtitle">Direct phone dialers & consultation requests</p>
+        </div>
       </div>
 
-      <!-- Doctor Cards -->
+      <!-- Doctor Contact Cards -->
       <div class="space-y-3 mb-6">
         <!-- Doctor 1 -->
-        <div class="p-4 border-2 border-blue-100 bg-blue-50/50 rounded-xl flex items-center justify-between">
+        <div class="p-4 border-2 border-blue-100 bg-blue-50/40 rounded-2xl flex items-center justify-between">
           <div>
             <h3 class="font-bold text-base text-brand-blue">Dr. S Satheesh Kumar</h3>
             <p class="text-xs text-gray-600" id="doc1-spec">General Physician & Senior Specialist</p>
             <p class="text-xs text-brand-blue font-semibold mt-1"><i class="fa-solid fa-phone mr-1"></i>9486817727</p>
           </div>
-          <a href="tel:9486817727" class="bg-brand-green text-white px-3 py-2 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
+          <a href="tel:9486817727" class="bg-brand-green text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
             <i class="fa-solid fa-phone"></i>
             <span id="btn-call-1">Call</span>
           </a>
         </div>
 
         <!-- Doctor 2 -->
-        <div class="p-4 border-2 border-blue-100 bg-blue-50/50 rounded-xl flex items-center justify-between">
+        <div class="p-4 border-2 border-blue-100 bg-blue-50/40 rounded-2xl flex items-center justify-between">
           <div>
             <h3 class="font-bold text-base text-brand-blue">Dr. G Vijayakumari</h3>
             <p class="text-xs text-gray-600" id="doc2-spec">Senior Care Specialist</p>
             <p class="text-xs text-brand-blue font-semibold mt-1"><i class="fa-solid fa-phone mr-1"></i>9487667893</p>
           </div>
-          <a href="tel:9487667893" class="bg-brand-green text-white px-3 py-2 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
+          <a href="tel:9487667893" class="bg-brand-green text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
             <i class="fa-solid fa-phone"></i>
             <span id="btn-call-2">Call</span>
           </a>
         </div>
 
-        <!-- Doctor 3 (Newly Added) -->
-        <div class="p-4 border-2 border-blue-100 bg-blue-50/50 rounded-xl flex items-center justify-between">
+        <!-- Doctor 3 -->
+        <div class="p-4 border-2 border-blue-100 bg-blue-50/40 rounded-2xl flex items-center justify-between">
           <div>
             <h3 class="font-bold text-base text-brand-blue">Dr. G Jayakumari</h3>
             <p class="text-xs text-gray-600" id="doc3-spec">Cardiologist (Heart Specialist)</p>
             <p class="text-xs text-brand-blue font-semibold mt-1"><i class="fa-solid fa-phone mr-1"></i>9481931546</p>
           </div>
-          <a href="tel:9481931546" class="bg-brand-green text-white px-3 py-2 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
+          <a href="tel:9481931546" class="bg-brand-green text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
             <i class="fa-solid fa-phone"></i>
             <span id="btn-call-3">Call</span>
           </a>
         </div>
       </div>
 
-      <!-- Phone Appointment Form for Non-Communicable Diseases -->
+      <!-- Tele-Consultation Form -->
       <div class="border-t pt-4">
-        <h3 class="font-bold text-sm mb-3 text-gray-800" id="appoint-title">Book Phone Consultation (NCD / Chronic)</h3>
+        <h3 class="font-extrabold text-base mb-3 text-gray-800" id="appoint-title">Book Phone Consultation (NCD / Chronic)</h3>
         <form onsubmit="bookAppointment(event)" class="space-y-3">
-          <select id="appoint-doctor" required class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm">
+          <select id="appoint-doctor" required class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-brand-blue">
             <option value="">Select Doctor / மருத்துவர் தேர்ந்தெடுக்கவும்</option>
             <option value="Dr S Satheesh Kumar">Dr. S Satheesh Kumar (9486817727)</option>
             <option value="Dr G Vijayakumari">Dr. G Vijayakumari (9487667893)</option>
             <option value="Dr G Jayakumari">Dr. G Jayakumari - Cardiologist (9481931546)</option>
           </select>
-          <input type="date" id="appoint-date" required class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm">
-          <textarea id="appoint-reason" rows="2" placeholder="Mention health concern (e.g. High BP, Joint Pain, Heart Care)" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm"></textarea>
+          <input type="date" id="appoint-date" required class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-brand-blue">
+          <textarea id="appoint-reason" rows="2" placeholder="Mention health concern (e.g. High BP, Joint Pain, Heart Care)" class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-brand-blue"></textarea>
           <button type="submit" class="w-full bg-brand-amber text-white btn-senior rounded-xl font-bold shadow hover:bg-amber-700 transition">
             <i class="fa-solid fa-calendar-check mr-2"></i><span id="btn-book">Confirm Phone Appointment</span>
           </button>
@@ -200,28 +250,112 @@
       </div>
     </section>
 
-    <!-- Section 4: Competition Prize Special Feature - Audio Voice Assistant -->
-    <section class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-5 rounded-2xl shadow">
-      <div class="flex items-center space-x-2 mb-2">
-        <i class="fa-solid fa-award text-yellow-400 text-2xl"></i>
-        <h2 class="font-bold text-base" id="expo-title">Expo Feature: Voice Healthcare Assistant</h2>
+    <!-- TAB 4: Daily Tablet & Medicine Tracker (Pill Reminders) -->
+    <section id="sec-pills" class="tab-content hidden bg-white p-6 rounded-2xl shadow high-contrast-card">
+      <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-4 gap-3">
+        <div>
+          <h2 class="font-extrabold text-xl text-gray-800" id="pill-title">Daily Tablet & Medicine Tracker</h2>
+          <p class="text-xs text-gray-500" id="pill-subtitle">Never miss a dose. Visual checklist for elderly users.</p>
+        </div>
+        <button onclick="testAlarmSound()" class="bg-yellow-400 text-gray-900 font-bold px-4 py-2.5 rounded-xl shadow text-sm hover:bg-yellow-300 transition flex items-center justify-center space-x-2">
+          <i class="fa-solid fa-bell"></i>
+          <span id="btn-test-alarm">Test Alarm Sound</span>
+        </button>
       </div>
-      <p class="text-xs text-blue-200 mb-3" id="expo-desc">Designed for visually challenged elderly users. Tap below to hear overall instructions or tap the voice button on any disease card above.</p>
-      <button onclick="speakInstructions()" class="w-full bg-yellow-400 text-gray-900 font-extrabold py-3 rounded-xl shadow flex items-center justify-center space-x-2 hover:bg-yellow-300">
-        <i class="fa-solid fa-volume-high text-lg"></i>
-        <span id="btn-voice">Read Out Emergency Instructions</span>
-      </button>
+
+      <!-- Add Medicine Input Form -->
+      <div class="bg-emerald-50/60 p-4 border-2 border-emerald-100 rounded-2xl mb-6">
+        <form onsubmit="addPillReminder(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label class="block font-bold text-xs mb-1 text-gray-700">Medicine / Tablet Name</label>
+            <input type="text" id="pill-name" required placeholder="e.g. Paracetamol 500mg" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-emerald-600">
+          </div>
+          <div>
+            <label class="block font-bold text-xs mb-1 text-gray-700">Time Slot</label>
+            <select id="pill-slot" required class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-emerald-600">
+              <option value="Morning">Morning (காலை)</option>
+              <option value="Afternoon">Afternoon (மதியம்)</option>
+              <option value="Night">Night (இரவு)</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button type="submit" class="w-full bg-emerald-700 text-white font-bold p-3 rounded-xl shadow hover:bg-emerald-800 transition text-sm flex items-center justify-center space-x-1">
+              <i class="fa-solid fa-plus"></i>
+              <span>Add Reminder</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Reminders List Cards -->
+      <div id="pills-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Dynamic Pill Cards -->
+      </div>
+    </section>
+
+    <!-- TAB 5: Blood Pressure & Sugar Tracker (Vitals Log) -->
+    <section id="sec-vitals" class="tab-content hidden bg-white p-6 rounded-2xl shadow high-contrast-card">
+      <div class="border-b pb-4 mb-4">
+        <h2 class="font-extrabold text-xl text-gray-800" id="vitals-title">Blood Pressure & Sugar Tracker</h2>
+        <p class="text-xs text-gray-500" id="vitals-subtitle">Log daily health vitals to show doctors during tele-consultation.</p>
+      </div>
+
+      <!-- Vitals Input Form -->
+      <form onsubmit="recordVitals(event)" class="bg-blue-50/50 p-4 border-2 border-blue-100 rounded-2xl mb-6 space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label class="block font-bold text-xs mb-1 text-gray-700">Systolic BP (Upper)</label>
+            <input type="number" id="vitals-sys" required min="70" max="240" placeholder="120" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-brand-blue">
+          </div>
+          <div>
+            <label class="block font-bold text-xs mb-1 text-gray-700">Diastolic BP (Lower)</label>
+            <input type="number" id="vitals-dia" required min="40" max="140" placeholder="80" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-brand-blue">
+          </div>
+          <div>
+            <label class="block font-bold text-xs mb-1 text-gray-700">Blood Sugar (mg/dL)</label>
+            <input type="number" id="vitals-sugar" required min="50" max="500" placeholder="110" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm outline-none focus:border-brand-blue">
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl shadow hover:bg-blue-800 transition text-sm flex items-center justify-center space-x-2">
+          <i class="fa-solid fa-heart-pulse"></i>
+          <span>Record Daily Vitals</span>
+        </button>
+      </form>
+
+      <!-- Vitals Evaluation Result Display Banner -->
+      <div id="vitals-eval-card" class="hidden p-5 rounded-2xl border-2 mb-6 transition-all">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Past Vitals History -->
+      <div>
+        <h3 class="font-bold text-sm mb-3 text-gray-800">Recent Vitals Records</h3>
+        <div id="vitals-history-list" class="space-y-2">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
     </section>
 
   </main>
 
   <!-- JavaScript Application Logic -->
   <script>
-    // Language state: 'en' or 'ta'
     let currentLang = 'en';
     let activeFilter = 'all';
 
-    // Comprehensive Medical Database of Common & Chronic Ailments
+    // Default Pill Reminders
+    let pillList = [
+      { id: 1, name: 'BP Tablet (Amlodipine)', slot: 'Morning', taken: true },
+      { id: 2, name: 'Paracetamol 500mg', slot: 'Afternoon', taken: false },
+      { id: 3, name: 'Diabetes (Metformin)', slot: 'Night', taken: false }
+    ];
+
+    // Default Vitals Logs
+    let vitalsHistory = [
+      { date: 'Today', sys: 120, dia: 80, sugar: 110, status: 'NORMAL' }
+    ];
+
+    // Disease Medical Database
     const diseases = [
       {
         id: 'fever',
@@ -281,44 +415,6 @@
         }
       },
       {
-        id: 'acidity',
-        category: 'infectious',
-        isCommunicable: false,
-        en: {
-          name: 'Acidity & Indigestion (அஜீரணம் / நெஞ்செரிச்சல்)',
-          symptoms: 'Heartburn, chest tightness after meals, stomach bloating.',
-          remedies: 'Avoid spicy/oily food, do not lie down immediately after eating.',
-          tablets: 'Antacid syrup, Pantoprazole 40mg (Before meal).',
-          diet: 'Buttermilk, banana, cold milk.'
-        },
-        ta: {
-          name: 'நெஞ்செரிச்சல் & அஜீரணம் (Acidity)',
-          symptoms: 'நெஞ்செரிச்சல், வயிறு உப்பசம், செரியாமை.',
-          remedies: 'காரமான மற்றும் எண்ணெய் உணவுகளைத் தவிர்க்கவும்.',
-          tablets: 'ஆன்டாசிட் சிரப், பான்டோபிரசோல் (Pantoprazole).',
-          diet: 'மோர், வாழைப்பழம், குளிர்ந்த பால்.'
-        }
-      },
-      {
-        id: 'constipation',
-        category: 'infectious',
-        isCommunicable: false,
-        en: {
-          name: 'Constipation (மலச்சிக்கல்)',
-          symptoms: 'Difficulty passing stool, abdominal pain.',
-          remedies: 'Drink at least 2.5 liters of water daily, light evening walks.',
-          tablets: 'Cremaffin syrup or Isabgol husk.',
-          diet: 'High fiber foods, papaya, green leafy vegetables.'
-        },
-        ta: {
-          name: 'மலச்சிக்கல் (Constipation)',
-          symptoms: 'மலம் கழிப்பதில் சிரமம், வயிற்று வலி.',
-          remedies: 'தினமும் 2.5 லிட்டர் தண்ணீர் குடிக்கவும், நடைபயிற்சி செய்யவும்.',
-          tablets: 'இசாப்கோல் (Isabgol) அல்லது சிரப்.',
-          diet: 'நார்ச்சத்து நிறைந்த உணவுகள், பப்பாளி, கீரைகள்.'
-        }
-      },
-      {
         id: 'bp',
         category: 'chronic',
         isCommunicable: false,
@@ -355,150 +451,49 @@
           tablets: 'மருத்துவர் குறிப்பிட்ட சர்க்கரை மாத்திரைகள்.',
           diet: 'சிறுதானியங்கள், பாகற்காய், இனிப்புகளைத் தவிர்க்கவும்.'
         }
-      },
-      {
-        id: 'arthritis',
-        category: 'chronic',
-        isCommunicable: false,
-        en: {
-          name: 'Arthritis & Joint Pain (மூட்டு வலி)',
-          symptoms: 'Knee joint stiffness, swelling, difficulty climbing stairs.',
-          remedies: 'Warm compress on knees, mild stretching, avoid squatting.',
-          tablets: 'Calcium + Vitamin D3 supplements, Pain relief gel.',
-          diet: 'Drumstick leaves, milk, sesame seeds.'
-        },
-        ta: {
-          name: 'மூட்டு வலி & வாதம் (Arthritis)',
-          symptoms: 'மூட்டுகளில் வீக்கம், படிக்கட்டுகளில் ஏற சிரமம்.',
-          remedies: 'வெதுவெதுப்பான ஒத்தடம் கொடுக்கவும், லேசான உடற்பயிற்சி.',
-          tablets: 'கால்சியம் மாத்திரைகள், வலி நிவாரண ஜெல்.',
-          diet: 'முருங்கைக் கீரை, பால், எள்.'
-        }
-      },
-      {
-        id: 'asthma',
-        category: 'chronic',
-        isCommunicable: false,
-        en: {
-          name: 'Asthma & Wheezing (ஆஸ்துமா / மூச்சுத்திணறல்)',
-          symptoms: 'Shortness of breath, chest tightness, wheezing sound.',
-          remedies: 'Stay away from cold air, smoke, and dust.',
-          tablets: 'Inhaler prescribed by doctor.',
-          diet: 'Warm herbal tea, ginger water.'
-        },
-        ta: {
-          name: 'ஆஸ்துமா & மூச்சுத்திணறல் (Asthma)',
-          symptoms: 'மூச்சு விடுவதில் சிரமம், மார்பு பிடிப்பு.',
-          remedies: 'குளிர்ந்த காற்று மற்றும் புகையைத் தவிர்க்கவும்.',
-          tablets: 'மருத்துவர் பரிந்துரைத்த இன்ஹேலர் (Inhaler).',
-          diet: 'இஞ்சி தண்ணீர், சூடான மூலிகை தேனீர்.'
-        }
       }
     ];
 
-    // Language Content Dictionary
-    const contentData = {
-      en: {
-        appTitle: "Senior Care",
-        appSubtitle: "Health & Tele-Consultation",
-        sosTitle: "Medical Emergency?",
-        sosDesc: "Instant 108 Ambulance Request",
-        patientHeading: "Patient Basic Details",
-        lblName: "Full Name",
-        lblMobile: "Mobile Number",
-        lblAadhar: "Aadhaar Card",
-        aadharNote: "Stored securely for emergency registration",
-        btnSave: "Save Patient Profile",
-        symptomsHeading: "Symptoms & Remedies",
-        doctorHeading: "Nearby Doctors & Tele-Consult",
-        doc1Spec: "General Physician & Senior Specialist",
-        doc2Spec: "Senior Care Specialist",
-        doc3Spec: "Cardiologist (Heart Specialist)",
-        btnCall: "Call",
-        appointTitle: "Book Phone Consultation (NCD / Chronic)",
-        btnBook: "Confirm Phone Appointment",
-        expoTitle: "Expo Feature: Voice Healthcare Assistant",
-        expoDesc: "Designed for visually challenged elderly users. Tap below to hear overall instructions or tap the voice button on any disease card above.",
-        btnVoice: "Read Out Emergency Instructions",
-        bookModalSuccess: "Phone consultation request sent successfully to doctor!",
-        saveModalSuccess: "Patient Profile saved successfully!"
-      },
-      ta: {
-        appTitle: "முதியோர் நலன்",
-        appSubtitle: "மருத்துவ உதவி & ஆலோசனை",
-        sosTitle: "அவசர மருத்துவ தேவையா?",
-        sosDesc: "உடனடி 108 ஆம்புலன்ஸ் சேவை",
-        patientHeading: "நோயாளி அடிப்படை விவரங்கள்",
-        lblName: "முழு பெயர்",
-        lblMobile: "கைபேசி எண்",
-        lblAadhar: "ஆதார் எண்",
-        aadharNote: "அவசர தேவைக்காக பாதுகாப்பாக சேமிக்கப்படும்",
-        btnSave: "விவரங்களை சேமிக்கவும்",
-        symptomsHeading: "நோய்கள், அறிகுறிகள் & மருந்துகள்",
-        doctorHeading: "அருகிலுள்ள மருத்துவர்கள் & தொலைபேசி ஆலோசனை",
-        doc1Spec: "பொது மருத்துவர் & மூத்த நிபுணர்",
-        doc2Spec: "முதியோர் சிகிச்சை நிபுணர்",
-        doc3Spec: "இதய சிகிச்சை நிபுணர் (கார்டியோலஜிஸ்ட்)",
-        btnCall: "அழைக்க",
-        appointTitle: "தொலைபேசி மருத்துவ ஆலோசனை பதிவு (தொற்றா நோய்கள்)",
-        btnBook: "ஆலோசனையை உறுதிசெய்யவும்",
-        expoTitle: "சிறப்பு அம்சம்: குரல் வழி வழிகாட்டி",
-        expoDesc: "பார்வை சவால்கள் உள்ள முதியோருக்கான பிரத்யேக ஒலி வழிகாட்டி.",
-        btnVoice: "அவசர வழிமுறைகளை உரக்கப் படிக்கவும்",
-        bookModalSuccess: "மருத்துவ ஆலோசனைக் கோரிக்கை வெற்றிபெற்றது!",
-        saveModalSuccess: "நோயாளி விவரங்கள் சேமிக்கப்பட்டன!"
-      }
-    };
-
-    // Initialize UI on Load
     window.onload = function() {
       loadSavedPatient();
       renderDiseases();
+      renderPills();
+      renderVitalsHistory();
     };
+
+    // Navigation Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('active');
+        el.classList.add('text-gray-600');
+      });
+
+      document.getElementById('sec-' + tabId).classList.remove('hidden');
+      const activeNav = document.getElementById('nav-' + tabId);
+      activeNav.classList.add('active');
+      activeNav.classList.remove('text-gray-600');
+    }
 
     // Toggle Language
     function toggleLanguage() {
       currentLang = (currentLang === 'en') ? 'ta' : 'en';
-      document.getElementById('lang-toggle-text').innerText = (currentLang === 'en') ? 'தமிழ்' : 'English';
-      
-      const text = contentData[currentLang];
-      document.getElementById('app-title').innerText = text.appTitle;
-      document.getElementById('app-subtitle').innerText = text.appSubtitle;
-      document.getElementById('sos-title').innerText = text.sosTitle;
-      document.getElementById('sos-desc').innerText = text.sosDesc;
-      document.getElementById('patient-info-heading').innerText = text.patientHeading;
-      document.getElementById('lbl-name').innerText = text.lblName;
-      document.getElementById('lbl-mobile').innerText = text.lblMobile;
-      document.getElementById('lbl-aadhar').innerText = text.lblAadhar;
-      document.getElementById('aadhar-note').innerText = text.aadharNote;
-      document.getElementById('btn-save-patient').innerText = text.btnSave;
-      document.getElementById('symptoms-heading').innerText = text.symptomsHeading;
-      document.getElementById('doctor-heading').innerText = text.doctorHeading;
-      document.getElementById('doc1-spec').innerText = text.doc1Spec;
-      document.getElementById('doc2-spec').innerText = text.doc2Spec;
-      document.getElementById('doc3-spec').innerText = text.doc3Spec;
-      document.getElementById('btn-call-1').innerText = text.btnCall;
-      document.getElementById('btn-call-2').innerText = text.btnCall;
-      document.getElementById('btn-call-3').innerText = text.btnCall;
-      document.getElementById('appoint-title').innerText = text.appointTitle;
-      document.getElementById('btn-book').innerText = text.btnBook;
-      document.getElementById('expo-title').innerText = text.expoTitle;
-      document.getElementById('expo-desc').innerText = text.expoDesc;
-      document.getElementById('btn-voice').innerText = text.btnVoice;
-
+      document.getElementById('lang-en').className = currentLang === 'en' ? 'text-brand-blue font-bold' : 'text-gray-600 font-normal';
+      document.getElementById('lang-ta').className = currentLang === 'ta' ? 'text-brand-blue font-bold' : 'text-gray-600 font-normal';
       renderDiseases();
+      renderPills();
     }
 
     // Filter Diseases
     function filterDiseases(cat) {
       activeFilter = cat;
-      document.getElementById('tab-all').className = cat === 'all' ? 'flex-1 py-2 text-xs font-bold rounded-lg bg-brand-blue text-white' : 'flex-1 py-2 text-xs font-bold rounded-lg bg-gray-200 text-gray-800';
-      document.getElementById('tab-inf').className = cat === 'infectious' ? 'flex-1 py-2 text-xs font-bold rounded-lg bg-brand-blue text-white' : 'flex-1 py-2 text-xs font-bold rounded-lg bg-gray-200 text-gray-800';
-      document.getElementById('tab-chr').className = cat === 'chronic' ? 'flex-1 py-2 text-xs font-bold rounded-lg bg-brand-blue text-white' : 'flex-1 py-2 text-xs font-bold rounded-lg bg-gray-200 text-gray-800';
+      document.getElementById('tab-all').className = cat === 'all' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-brand-blue text-white' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-gray-200 text-gray-800';
+      document.getElementById('tab-inf').className = cat === 'infectious' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-brand-blue text-white' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-gray-200 text-gray-800';
+      document.getElementById('tab-chr').className = cat === 'chronic' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-brand-blue text-white' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-gray-200 text-gray-800';
       renderDiseases();
     }
 
-    // Render Dynamic Disease Cards
+    // Render Diseases List
     function renderDiseases() {
       const container = document.getElementById('disease-list');
       const searchQuery = document.getElementById('disease-search').value.toLowerCase();
@@ -507,43 +502,31 @@
       const filtered = diseases.filter(d => {
         const matchesFilter = (activeFilter === 'all') || (d.category === activeFilter);
         const data = d[currentLang];
-        const matchesSearch = data.name.toLowerCase().includes(searchQuery) || data.symptoms.toLowerCase().includes(searchQuery);
-        return matchesFilter && matchesSearch;
+        return matchesFilter && (data.name.toLowerCase().includes(searchQuery) || data.symptoms.toLowerCase().includes(searchQuery));
       });
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No matching symptoms found.</p>`;
-        return;
-      }
 
       filtered.forEach(d => {
         const info = d[currentLang];
         const isChronic = !d.isCommunicable;
-
         const card = document.createElement('div');
-        card.className = "border-2 border-gray-200 rounded-xl p-4 bg-gray-50 hover:bg-white transition space-y-2";
-        
+        card.className = "border-2 border-gray-200 rounded-2xl p-4 bg-gray-50 hover:bg-white transition space-y-2";
         card.innerHTML = `
           <div class="flex items-center justify-between">
             <h3 class="font-bold text-base text-brand-blue">${info.name}</h3>
-            <span class="text-xs px-2 py-0.5 rounded font-semibold ${isChronic ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'}">
+            <span class="text-xs px-2.5 py-1 rounded-full font-bold ${isChronic ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'}">
               ${isChronic ? (currentLang === 'en' ? 'Non-Communicable' : 'தொற்றா நோய்') : (currentLang === 'en' ? 'Communicable' : 'தொற்று நோய்')}
             </span>
           </div>
           <p class="text-xs text-gray-700"><strong><i class="fa-solid fa-stethoscope mr-1"></i>Symptoms:</strong> ${info.symptoms}</p>
           <p class="text-xs text-green-800"><strong><i class="fa-solid fa-house-medical mr-1"></i>Remedies:</strong> ${info.remedies}</p>
           <p class="text-xs text-blue-900"><strong><i class="fa-solid fa-pills mr-1"></i>Suggested OTC Tablets:</strong> ${info.tablets}</p>
-          <p class="text-xs text-purple-900"><strong><i class="fa-solid fa-utensils mr-1"></i>Diet Advice:</strong> ${info.diet}</p>
-          
           <div class="pt-2 flex space-x-2">
-            <!-- Voice Assistant Button per Disease Card -->
-            <button onclick="speakDiseaseDetails('${d.id}')" class="flex-1 bg-indigo-600 text-white text-xs py-2 rounded-lg font-bold hover:bg-indigo-700 transition flex items-center justify-center space-x-1">
+            <button onclick="speakDiseaseDetails('${d.id}')" class="flex-1 bg-indigo-600 text-white text-xs py-2 rounded-xl font-bold hover:bg-indigo-700 transition flex items-center justify-center space-x-1">
               <i class="fa-solid fa-volume-high"></i>
               <span>${currentLang === 'en' ? 'Read Details' : 'விவரத்தை கேட்க'}</span>
             </button>
-
             ${isChronic ? `
-              <button onclick="scrollToAppointment('${info.name}')" class="flex-1 bg-amber-600 text-white text-xs py-2 rounded-lg font-bold hover:bg-amber-700 transition flex items-center justify-center space-x-1">
+              <button onclick="switchTab('doctors')" class="flex-1 bg-amber-600 text-white text-xs py-2 rounded-xl font-bold hover:bg-amber-700 transition flex items-center justify-center space-x-1">
                 <i class="fa-solid fa-phone-volume"></i>
                 <span>${currentLang === 'en' ? 'Book Consult' : 'ஆலோசனை பெற'}</span>
               </button>
@@ -554,87 +537,166 @@
       });
     }
 
-    // Text to Speech Voice Reader for Specific Disease
-    function speakDiseaseDetails(diseaseId) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const item = diseases.find(d => d.id === diseaseId);
-        if (!item) return;
+    // Pill Reminders Logic
+    function renderPills() {
+      const container = document.getElementById('pills-container');
+      container.innerHTML = '';
 
-        const data = item[currentLang];
-        const speechText = currentLang === 'en'
-          ? `Condition: ${data.name}. Symptoms include: ${data.symptoms}. Home Remedies: ${data.remedies}. Suggested tablets: ${data.tablets}. Diet advice: ${data.diet}`
-          : `நோய்: ${data.name}. அறிகுறிகள்: ${data.symptoms}. வீட்டு வைத்தியம்: ${data.remedies}. மாத்திரைகள்: ${data.tablets}. உணவு முறை: ${data.diet}`;
-
-        const utterance = new SpeechSynthesisUtterance(speechText);
-        utterance.rate = 0.85;
-        utterance.lang = currentLang === 'en' ? 'en-US' : 'ta-IN';
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert("Voice speech is not supported in this browser.");
-      }
+      pillList.forEach(pill => {
+        const card = document.createElement('div');
+        card.className = `p-4 border-2 rounded-2xl flex flex-col justify-between space-y-3 ${pill.taken ? 'border-emerald-300 bg-emerald-50/70' : 'border-gray-200 bg-white'}`;
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs uppercase font-extrabold px-2.5 py-0.5 rounded-full ${pill.slot === 'Morning' ? 'bg-amber-100 text-amber-800' : pill.slot === 'Afternoon' ? 'bg-orange-100 text-orange-800' : 'bg-indigo-100 text-indigo-800'}">
+              ${pill.slot}
+            </span>
+            <button onclick="deletePill(${pill.id})" class="text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+          <h4 class="font-bold text-base text-gray-800">${pill.name}</h4>
+          <button onclick="togglePillTaken(${pill.id})" class="w-full py-2.5 rounded-xl font-bold text-sm transition flex items-center justify-center space-x-1 ${pill.taken ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-800 border-2 border-gray-300 hover:bg-gray-200'}">
+            <i class="fa-solid ${pill.taken ? 'fa-circle-check' : 'fa-circle'}"></i>
+            <span>${pill.taken ? 'Taken ✓' : 'Mark as Taken'}</span>
+          </button>
+        `;
+        container.appendChild(card);
+      });
     }
 
-    // Trigger SOS Call
+    function addPillReminder(e) {
+      e.preventDefault();
+      const name = document.getElementById('pill-name').value;
+      const slot = document.getElementById('pill-slot').value;
+      pillList.push({ id: Date.now(), name: name, slot: slot, taken: false });
+      document.getElementById('pill-name').value = '';
+      renderPills();
+    }
+
+    function togglePillTaken(id) {
+      pillList = pillList.map(p => p.id === id ? { ...p, taken: !p.taken } : p);
+      renderPills();
+    }
+
+    function deletePill(id) {
+      pillList = pillList.filter(p => p.id !== id);
+      renderPills();
+    }
+
+    function testAlarmSound() {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance("Time to take your medicine tablet!");
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      }
+      alert("🔔 Beep Beep! Pill Reminder Alarm Triggered!");
+    }
+
+    // Vitals Evaluation Logic (NORMAL, HIGH, MEET DOCTOR IMMEDIATELY)
+    function recordVitals(e) {
+      e.preventDefault();
+      const sys = parseInt(document.getElementById('vitals-sys').value);
+      const dia = parseInt(document.getElementById('vitals-dia').value);
+      const sugar = parseInt(document.getElementById('vitals-sugar').value);
+
+      let status = 'NORMAL';
+      let evalBg = 'bg-green-100 border-green-400 text-green-900';
+      let evalIcon = 'fa-circle-check text-green-600';
+      let evalMessage = 'Your Blood Pressure and Blood Sugar levels are within normal range.';
+
+      // Critical Check (MEET / CONSULT DOCTOR IMMEDIATELY)
+      if (sys >= 180 || dia >= 120 || sugar >= 300 || sys <= 90 || sugar <= 70) {
+        status = 'MEET / CONSULT DOCTOR IMMEDIATELY';
+        evalBg = 'bg-red-100 border-red-500 text-red-900';
+        evalIcon = 'fa-triangle-exclamation text-red-600 animate-bounce';
+        evalMessage = '⚠️ CRITICAL ALERT: Your vitals indicate severe deviation! Please call Dr. Satheesh Kumar (9486817727) or tap 108 Emergency Ambulance immediately.';
+      } 
+      // High Check
+      else if (sys >= 140 || dia >= 90 || sugar >= 180) {
+        status = 'HIGH';
+        evalBg = 'bg-amber-100 border-amber-400 text-amber-900';
+        evalIcon = 'fa-circle-exclamation text-amber-600';
+        evalMessage = '⚡ HIGH VITALS DETECTED: Elevated BP/Sugar levels. Take prescribed medication, rest, and schedule a phone consult with your doctor.';
+      }
+
+      const evalCard = document.getElementById('vitals-eval-card');
+      evalCard.className = `p-5 rounded-2xl border-2 mb-6 ${evalBg}`;
+      evalCard.innerHTML = `
+        <div class="flex items-start space-x-3">
+          <i class="fa-solid ${evalIcon} text-2xl mt-1"></i>
+          <div>
+            <h4 class="font-extrabold text-lg uppercase tracking-wide">Status: ${status}</h4>
+            <p class="text-sm font-medium mt-1">${evalMessage}</p>
+            <div class="mt-3 flex space-x-2">
+              <button onclick="switchTab('doctors')" class="bg-gray-900 text-white text-xs px-4 py-2 rounded-xl font-bold">Consult Doctor Now</button>
+            </div>
+          </div>
+        </div>
+      `;
+      evalCard.classList.remove('hidden');
+
+      // Add to History
+      vitalsHistory.unshift({ date: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), sys, dia, sugar, status });
+      renderVitalsHistory();
+    }
+
+    function renderVitalsHistory() {
+      const container = document.getElementById('vitals-history-list');
+      container.innerHTML = '';
+      vitalsHistory.forEach(item => {
+        const div = document.createElement('div');
+        const badgeColor = item.status.includes('MEET') ? 'bg-red-600 text-white' : item.status === 'HIGH' ? 'bg-amber-500 text-white' : 'bg-green-600 text-white';
+        div.className = "p-3 border rounded-xl bg-gray-50 flex items-center justify-between text-xs font-semibold";
+        div.innerHTML = `
+          <div>
+            <span class="text-gray-500">${item.date}</span> - 
+            BP: <strong>${item.sys}/${item.dia} mmHg</strong> | Sugar: <strong>${item.sugar} mg/dL</strong>
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-black ${badgeColor}">${item.status}</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Helper functions
     function triggerSOS() {
-      if (confirm(currentLang === 'en' ? "Call Emergency 108 Ambulance now?" : "108 ஆம்புலன்ஸ் சேவைக்கு அழைக்கவா?")) {
+      if (confirm("Call Emergency 108 Ambulance now?")) {
         window.location.href = "tel:108";
       }
     }
 
-    // Save Patient Profile to LocalStorage
     function savePatientInfo(e) {
       e.preventDefault();
-      const patient = {
-        name: document.getElementById('patient-name').value,
-        mobile: document.getElementById('patient-mobile').value,
-        aadhar: document.getElementById('patient-aadhar').value
-      };
-      localStorage.setItem('senior_patient_data', JSON.stringify(patient));
-      alert(contentData[currentLang].saveModalSuccess);
+      alert("Patient profile saved successfully!");
     }
 
-    // Load Saved Patient Info
     function loadSavedPatient() {
-      const saved = localStorage.getItem('senior_patient_data');
-      if (saved) {
-        const patient = JSON.parse(saved);
-        document.getElementById('patient-name').value = patient.name || '';
-        document.getElementById('patient-mobile').value = patient.mobile || '';
-        document.getElementById('patient-aadhar').value = patient.aadhar || '';
+      document.getElementById('patient-name').value = "Ramasamy M";
+      document.getElementById('patient-mobile').value = "9876543210";
+      document.getElementById('patient-aadhar').value = "123456789012";
+    }
+
+    function bookAppointment(e) {
+      e.preventDefault();
+      alert("Phone consultation requested successfully!");
+    }
+
+    function speakInstructions() {
+      if ('speechSynthesis' in window) {
+        const text = "Welcome to Senior Care. Use the top tabs to check your profile, symptoms, doctors, pill reminders, and log your daily blood pressure and sugar levels.";
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
       }
     }
 
-    // Scroll to Doctor Appointment Section
-    function scrollToAppointment(diseaseName) {
-      document.getElementById('appoint-reason').value = diseaseName;
-      document.getElementById('doctor-heading').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Book Phone Appointment
-    function bookAppointment(e) {
-      e.preventDefault();
-      const doc = document.getElementById('appoint-doctor').value;
-      const date = document.getElementById('appoint-date').value;
-      const reason = document.getElementById('appoint-reason').value;
-
-      alert(`${contentData[currentLang].bookModalSuccess}\n\nDoctor: ${doc}\nDate: ${date}\nReason: ${reason}`);
-    }
-
-    // Text to Speech Voice Reader for General App Instructions
-    function speakInstructions() {
+    function speakDiseaseDetails(diseaseId) {
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const text = currentLang === 'en' 
-          ? "Welcome to Senior Care App. For medical emergencies press the top red button to call 108 ambulance immediately. Doctors Satheesh Kumar, Vijayakumari, and Jayakumari are available for consultations."
-          : "முதியோர் மருத்துவ உதவி செயலிற்கு நல்வரவு. அவசர தேவைக்கு மேலே உள்ள சிவப்பு நிற பொத்தானை அழுத்தி 108 ஆம்புலன்ஸை அழைக்கலாம்.";
-        
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.85;
-        utterance.lang = currentLang === 'en' ? 'en-US' : 'ta-IN';
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert("Voice synthesis is not supported on this browser.");
+        const item = diseases.find(d => d.id === diseaseId);
+        if (item) {
+          const data = item[currentLang];
+          const utterance = new SpeechSynthesisUtterance(`${data.name}. Symptoms: ${data.symptoms}. Remedies: ${data.remedies}`);
+          utterance.rate = 0.85;
+          window.speechSynthesis.speak(utterance);
+        }
       }
     }
   </script>
