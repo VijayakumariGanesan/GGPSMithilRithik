@@ -145,10 +145,10 @@
         <div class="p-4 border-2 border-blue-100 bg-blue-50/50 rounded-xl flex items-center justify-between">
           <div>
             <h3 class="font-bold text-base text-brand-blue">Dr. S Satheesh Kumar</h3>
-            <p class="text-xs text-gray-600">General Physician & Senior Specialist</p>
-            <p class="text-xs text-brand-blue font-semibold mt-1"><i class="fa-solid fa-phone mr-1"></i>9840617727</p>
+            <p class="text-xs text-gray-600" id="doc1-spec">General Physician & Senior Specialist</p>
+            <p class="text-xs text-brand-blue font-semibold mt-1"><i class="fa-solid fa-phone mr-1"></i>9486817727</p>
           </div>
-          <a href="tel:9840617727" class="bg-brand-green text-white px-3 py-2 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
+          <a href="tel:9486817727" class="bg-brand-green text-white px-3 py-2 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
             <i class="fa-solid fa-phone"></i>
             <span id="btn-call-1">Call</span>
           </a>
@@ -158,7 +158,7 @@
         <div class="p-4 border-2 border-blue-100 bg-blue-50/50 rounded-xl flex items-center justify-between">
           <div>
             <h3 class="font-bold text-base text-brand-blue">Dr. G Vijayakumari</h3>
-            <p class="text-xs text-gray-600">Senior Care Specialist</p>
+            <p class="text-xs text-gray-600" id="doc2-spec">Senior Care Specialist</p>
             <p class="text-xs text-brand-blue font-semibold mt-1"><i class="fa-solid fa-phone mr-1"></i>9487667893</p>
           </div>
           <a href="tel:9487667893" class="bg-brand-green text-white px-3 py-2 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
@@ -166,18 +166,17 @@
             <span id="btn-call-2">Call</span>
           </a>
         </div>
-      </div>
-       
-        <!-- Doctor 2 -->
+
+        <!-- Doctor 3 (Newly Added) -->
         <div class="p-4 border-2 border-blue-100 bg-blue-50/50 rounded-xl flex items-center justify-between">
           <div>
             <h3 class="font-bold text-base text-brand-blue">Dr. G Jayakumari</h3>
-            <p class="text-xs text-gray-600">Cardiologist</p>
+            <p class="text-xs text-gray-600" id="doc3-spec">Cardiologist (Heart Specialist)</p>
             <p class="text-xs text-brand-blue font-semibold mt-1"><i class="fa-solid fa-phone mr-1"></i>9481931546</p>
           </div>
           <a href="tel:9481931546" class="bg-brand-green text-white px-3 py-2 rounded-xl text-sm font-bold flex items-center space-x-1 hover:bg-green-800">
             <i class="fa-solid fa-phone"></i>
-            <span id="btn-call-2">Call</span>
+            <span id="btn-call-3">Call</span>
           </a>
         </div>
       </div>
@@ -190,9 +189,10 @@
             <option value="">Select Doctor / மருத்துவர் தேர்ந்தெடுக்கவும்</option>
             <option value="Dr S Satheesh Kumar">Dr. S Satheesh Kumar (9486817727)</option>
             <option value="Dr G Vijayakumari">Dr. G Vijayakumari (9487667893)</option>
+            <option value="Dr G Jayakumari">Dr. G Jayakumari - Cardiologist (9481931546)</option>
           </select>
           <input type="date" id="appoint-date" required class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm">
-          <textarea id="appoint-reason" rows="2" placeholder="Mention health concern (e.g. High BP, Joint Pain)" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm"></textarea>
+          <textarea id="appoint-reason" rows="2" placeholder="Mention health concern (e.g. High BP, Joint Pain, Heart Care)" class="w-full p-3 border-2 border-gray-300 rounded-xl text-sm"></textarea>
           <button type="submit" class="w-full bg-brand-amber text-white btn-senior rounded-xl font-bold shadow hover:bg-amber-700 transition">
             <i class="fa-solid fa-calendar-check mr-2"></i><span id="btn-book">Confirm Phone Appointment</span>
           </button>
@@ -200,13 +200,13 @@
       </div>
     </section>
 
-    <!-- Section 4: Competition Prize Special Feature - Audio Voice Reader -->
+    <!-- Section 4: Competition Prize Special Feature - Audio Voice Assistant -->
     <section class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-5 rounded-2xl shadow">
       <div class="flex items-center space-x-2 mb-2">
         <i class="fa-solid fa-award text-yellow-400 text-2xl"></i>
         <h2 class="font-bold text-base" id="expo-title">Expo Feature: Voice Healthcare Assistant</h2>
       </div>
-      <p class="text-xs text-blue-200 mb-3" id="expo-desc">Designed for visually challenged elderly users. Tap below to speak out emergency instructions.</p>
+      <p class="text-xs text-blue-200 mb-3" id="expo-desc">Designed for visually challenged elderly users. Tap below to hear overall instructions or tap the voice button on any disease card above.</p>
       <button onclick="speakInstructions()" class="w-full bg-yellow-400 text-gray-900 font-extrabold py-3 rounded-xl shadow flex items-center justify-center space-x-2 hover:bg-yellow-300">
         <i class="fa-solid fa-volume-high text-lg"></i>
         <span id="btn-voice">Read Out Emergency Instructions</span>
@@ -411,11 +411,14 @@
         btnSave: "Save Patient Profile",
         symptomsHeading: "Symptoms & Remedies",
         doctorHeading: "Nearby Doctors & Tele-Consult",
+        doc1Spec: "General Physician & Senior Specialist",
+        doc2Spec: "Senior Care Specialist",
+        doc3Spec: "Cardiologist (Heart Specialist)",
         btnCall: "Call",
         appointTitle: "Book Phone Consultation (NCD / Chronic)",
         btnBook: "Confirm Phone Appointment",
         expoTitle: "Expo Feature: Voice Healthcare Assistant",
-        expoDesc: "Designed for visually challenged elderly users. Tap below to speak out emergency instructions.",
+        expoDesc: "Designed for visually challenged elderly users. Tap below to hear overall instructions or tap the voice button on any disease card above.",
         btnVoice: "Read Out Emergency Instructions",
         bookModalSuccess: "Phone consultation request sent successfully to doctor!",
         saveModalSuccess: "Patient Profile saved successfully!"
@@ -433,6 +436,9 @@
         btnSave: "விவரங்களை சேமிக்கவும்",
         symptomsHeading: "நோய்கள், அறிகுறிகள் & மருந்துகள்",
         doctorHeading: "அருகிலுள்ள மருத்துவர்கள் & தொலைபேசி ஆலோசனை",
+        doc1Spec: "பொது மருத்துவர் & மூத்த நிபுணர்",
+        doc2Spec: "முதியோர் சிகிச்சை நிபுணர்",
+        doc3Spec: "இதய சிகிச்சை நிபுணர் (கார்டியோலஜிஸ்ட்)",
         btnCall: "அழைக்க",
         appointTitle: "தொலைபேசி மருத்துவ ஆலோசனை பதிவு (தொற்றா நோய்கள்)",
         btnBook: "ஆலோசனையை உறுதிசெய்யவும்",
@@ -468,8 +474,12 @@
       document.getElementById('btn-save-patient').innerText = text.btnSave;
       document.getElementById('symptoms-heading').innerText = text.symptomsHeading;
       document.getElementById('doctor-heading').innerText = text.doctorHeading;
+      document.getElementById('doc1-spec').innerText = text.doc1Spec;
+      document.getElementById('doc2-spec').innerText = text.doc2Spec;
+      document.getElementById('doc3-spec').innerText = text.doc3Spec;
       document.getElementById('btn-call-1').innerText = text.btnCall;
       document.getElementById('btn-call-2').innerText = text.btnCall;
+      document.getElementById('btn-call-3').innerText = text.btnCall;
       document.getElementById('appoint-title').innerText = text.appointTitle;
       document.getElementById('btn-book').innerText = text.btnBook;
       document.getElementById('expo-title').innerText = text.expoTitle;
@@ -524,17 +534,45 @@
           <p class="text-xs text-green-800"><strong><i class="fa-solid fa-house-medical mr-1"></i>Remedies:</strong> ${info.remedies}</p>
           <p class="text-xs text-blue-900"><strong><i class="fa-solid fa-pills mr-1"></i>Suggested OTC Tablets:</strong> ${info.tablets}</p>
           <p class="text-xs text-purple-900"><strong><i class="fa-solid fa-utensils mr-1"></i>Diet Advice:</strong> ${info.diet}</p>
-          ${isChronic ? `
-            <div class="pt-2">
-              <button onclick="scrollToAppointment('${info.name}')" class="w-full bg-amber-600 text-white text-xs py-2 rounded-lg font-bold hover:bg-amber-700 transition flex items-center justify-center space-x-1">
+          
+          <div class="pt-2 flex space-x-2">
+            <!-- Voice Assistant Button per Disease Card -->
+            <button onclick="speakDiseaseDetails('${d.id}')" class="flex-1 bg-indigo-600 text-white text-xs py-2 rounded-lg font-bold hover:bg-indigo-700 transition flex items-center justify-center space-x-1">
+              <i class="fa-solid fa-volume-high"></i>
+              <span>${currentLang === 'en' ? 'Read Details' : 'விவரத்தை கேட்க'}</span>
+            </button>
+
+            ${isChronic ? `
+              <button onclick="scrollToAppointment('${info.name}')" class="flex-1 bg-amber-600 text-white text-xs py-2 rounded-lg font-bold hover:bg-amber-700 transition flex items-center justify-center space-x-1">
                 <i class="fa-solid fa-phone-volume"></i>
-                <span>${currentLang === 'en' ? 'Book Phone Consultation with Doctor' : 'மருத்துவ ஆலோசனை பெற பதிவு செய்'}</span>
+                <span>${currentLang === 'en' ? 'Book Consult' : 'ஆலோசனை பெற'}</span>
               </button>
-            </div>
-          ` : ''}
+            ` : ''}
+          </div>
         `;
         container.appendChild(card);
       });
+    }
+
+    // Text to Speech Voice Reader for Specific Disease
+    function speakDiseaseDetails(diseaseId) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const item = diseases.find(d => d.id === diseaseId);
+        if (!item) return;
+
+        const data = item[currentLang];
+        const speechText = currentLang === 'en'
+          ? `Condition: ${data.name}. Symptoms include: ${data.symptoms}. Home Remedies: ${data.remedies}. Suggested tablets: ${data.tablets}. Diet advice: ${data.diet}`
+          : `நோய்: ${data.name}. அறிகுறிகள்: ${data.symptoms}. வீட்டு வைத்தியம்: ${data.remedies}. மாத்திரைகள்: ${data.tablets}. உணவு முறை: ${data.diet}`;
+
+        const utterance = new SpeechSynthesisUtterance(speechText);
+        utterance.rate = 0.85;
+        utterance.lang = currentLang === 'en' ? 'en-US' : 'ta-IN';
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Voice speech is not supported in this browser.");
+      }
     }
 
     // Trigger SOS Call
@@ -583,15 +621,16 @@
       alert(`${contentData[currentLang].bookModalSuccess}\n\nDoctor: ${doc}\nDate: ${date}\nReason: ${reason}`);
     }
 
-    // Text to Speech Voice Reader for Visually Challenged Seniors
+    // Text to Speech Voice Reader for General App Instructions
     function speakInstructions() {
       if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
         const text = currentLang === 'en' 
-          ? "Welcome to Senior Care App. For medical emergencies press the top red button to call 108 ambulance immediately. Doctors Satheesh Kumar and Vijayakumari are available for phone consultations."
+          ? "Welcome to Senior Care App. For medical emergencies press the top red button to call 108 ambulance immediately. Doctors Satheesh Kumar, Vijayakumari, and Jayakumari are available for consultations."
           : "முதியோர் மருத்துவ உதவி செயலிற்கு நல்வரவு. அவசர தேவைக்கு மேலே உள்ள சிவப்பு நிற பொத்தானை அழுத்தி 108 ஆம்புலன்ஸை அழைக்கலாம்.";
         
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.9; // Slower rate for elderly clarity
+        utterance.rate = 0.85;
         utterance.lang = currentLang === 'en' ? 'en-US' : 'ta-IN';
         window.speechSynthesis.speak(utterance);
       } else {
